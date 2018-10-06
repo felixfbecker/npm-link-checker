@@ -1,0 +1,47 @@
+{
+  "name": "npm-link-checker",
+  "version": "0.0.1",
+  "description": "Makes sure your npm linked dependencies are not violating version constraints",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "check-npm-links": "dist/cli.js"
+  },
+  "repository": "https://github.com/felixfbecker/npm-link-checker",
+  "author": "Felix Becker <felix.b@outlook.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -p . -w",
+    "tslint": "tslint 'src/**/*.ts' -p ./tsconfig.json -c ./tslint.json",
+    "prettier": "prettier --write --list-different '**/*.{ts,json,md}'"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "chokidar": "^2.0.4",
+    "execa": "^1.0.0",
+    "got": "^9.2.2",
+    "mz": "^2.7.0",
+    "registry-auth-token": "^3.3.2",
+    "semver": "^5.5.1",
+    "signale": "^1.3.0",
+    "yargs": "^12.0.2"
+  },
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/chokidar": "^1.7.5",
+    "@types/execa": "^0.9.0",
+    "@types/got": "^8.3.4",
+    "@types/mz": "^0.0.32",
+    "@types/node": "^10.11.4",
+    "@types/registry-auth-token": "^3.3.0",
+    "@types/semver": "^5.5.0",
+    "@types/signale": "^1.2.0",
+    "@types/yargs": "^12.0.1",
+    "prettier": "^1.14.3",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.1.1"
+  }
+}

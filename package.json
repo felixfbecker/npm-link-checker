@@ -1,6 +1,6 @@
 {
   "name": "npm-link-checker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Makes sure your npm linked dependencies are not violating version constraints",
   "files": [
     "dist"

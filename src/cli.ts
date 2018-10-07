@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import chalk from 'chalk'
+import { spawn } from 'child_process'
 import { watch } from 'chokidar'
 import execa from 'execa'
 import got from 'got'
@@ -10,6 +11,7 @@ import getAuthToken from 'registry-auth-token'
 import getRegistryUrl from 'registry-auth-token/registry-url'
 import * as semver from 'semver'
 import signale from 'signale'
+import split from 'split2'
 import { URL } from 'url'
 import yargs from 'yargs'
 
@@ -39,14 +41,18 @@ async function findClosestVersion(linkedRepoRoot: string, packageMeta: PackageMe
             versionsByCommit.set(pkg.gitHead, pkg.version)
         }
     }
-    const stdout = await execa.stdout('git', ['log', '--format=%H'], { cwd: linkedRepoRoot })
-    for (const commit of stdout.split('\n')) {
-        const version = versionsByCommit.get(commit)
-        if (version) {
-            return version
+    const gitProcess = await spawn('git', ['log', '--format=%H'], { cwd: linkedRepoRoot })
+    try {
+        for await (const commit of gitProcess.stdout.pipe(split())) {
+            const version = versionsByCommit.get(commit)
+            if (version) {
+                return version
+            }
         }
+        return undefined
+    } finally {
+        gitProcess.kill()
     }
-    return undefined
 }
 
 const fetchPackageMeta = async (packageName: string): Promise<PackageMeta> => {
